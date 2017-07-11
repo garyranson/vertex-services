@@ -1,0 +1,35 @@
+{
+  "name": "vertex-services",
+  "version": "0.0.1",
+  "description": "Vertex Services",
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "registry": "npm",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Gary Ranson",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "expression-compiler": "github:garyranson/expression-compiler"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garyranson/expression-compiler.git"
+  },
+  "files": [
+    "lib/"
+  ],
+  "jspm": {
+    "registry": "jspm",
+    "main": "index",
+    "directories": {
+      "lib": "lib"
+    },
+    "dependencies": {},
+    "devDependencies": {}
+  }
+}

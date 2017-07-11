@@ -1,0 +1,1 @@
+{"version":3,"file":"vertex-actions.js","sourceRoot":"","sources":["../src/vertex-actions.ts"],"names":[],"mappings":";;AACA;IACE,uBAAoB,OAA6B;QAA7B,YAAO,GAAP,OAAO,CAAsB;IACjD,CAAC;IAED,oCAAY,GAAZ,UAAa,OAAe;QAC1B,MAAM,CAAC,IAAI,CAAC,OAAO,CAAC,QAAQ,CAAC,OAAO,EAAE,EAAE,CAAC,CAAC,CAAC;IAC7C,CAAC;IACH,oBAAC;AAAD,CAAC,AAPD,IAOC;AAPY,sCAAa"}
