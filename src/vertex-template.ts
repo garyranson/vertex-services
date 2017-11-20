@@ -11,6 +11,7 @@ export interface VertexTemplate {
 }
 
 class VertexTemplateImpl implements VertexTemplate {
+  // noinspection JSUnusedLocalSymbols
   constructor(private root: Element, private vertexController: any, private actions: VertexActions, private definitions: Element[]) {
   }
 

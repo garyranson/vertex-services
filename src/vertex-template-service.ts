@@ -17,6 +17,7 @@ export interface InternalXLink {
 }
 
 
+// noinspection JSUnusedGlobalSymbols
 export class VertexTemplateService {
   static _inject = [SvgHelper, Actions, VertexTemplateFactory];
 
@@ -80,10 +81,10 @@ export class VertexTemplateService {
   private getXLinkHRefs(root: SVGSVGElement): InternalXLink[] {
 
     let rc: InternalXLink[] = [];
-    let hrefnodes           = root.querySelectorAll("[*|href]:not([href])");
+    let hRefNodes           = root.querySelectorAll("[*|href]:not([href])");
 
-    for (let i = hrefnodes.length - 1; i >= 0; i--) {
-      let el       = hrefnodes[i];
+    for (let i = hRefNodes.length - 1; i >= 0; i--) {
+      let el       = hRefNodes[i];
       let hrefAttr = el.getAttributeNS("http://www.w3.org/1999/xlink", "href");
       if (hrefAttr && hrefAttr.startsWith("#")) {
         rc.push({

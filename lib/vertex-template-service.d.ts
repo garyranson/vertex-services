@@ -15,7 +15,7 @@ export declare class VertexTemplateService {
     private svgHelper;
     private actions;
     private templateFactory;
-    static _inject: (typeof Actions | typeof SvgHelper | typeof VertexTemplateFactory)[];
+    static _inject: (typeof SvgHelper | typeof Actions | typeof VertexTemplateFactory)[];
     constructor(svgHelper: SvgHelper, actions: Actions, templateFactory: VertexTemplateFactory);
     createTemplate(markup: string, viewController: any): VertexTemplate;
     private _createTemplateActions(root);

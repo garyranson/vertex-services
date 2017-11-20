@@ -1,6 +1,6 @@
 {
   "name": "vertex-services",
-  "version": "0.0.1",
+  "version": "0.0.20",
   "description": "Vertex Services",
   "main": "lib/index.js",
   "typings": "lib/index",
