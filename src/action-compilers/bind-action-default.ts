@@ -1,5 +1,5 @@
 import {ActionFactory, ElementInstruction} from "./definitions";
-import {Intern} from "./string-intern";
+import {Intern} from "../string-intern";
 import {Instruction} from "expression-compiler";
 
 export class DefaultActionFactory implements ActionFactory {

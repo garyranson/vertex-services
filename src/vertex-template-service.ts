@@ -1,8 +1,8 @@
 import {VertexTemplate, VertexTemplateFactory} from "./vertex-template";
 import {SvgHelper} from "./svg-helper";
 import {VertexActions} from "./vertex-actions";
-import {Actions} from "./actions";
-import {ElementInstruction} from "./definitions";
+import {ActionRegistry} from "./action-registry";
+import {ElementInstruction} from "./action-compilers";
 
 export interface InternalAttr {
   name: string;
@@ -19,18 +19,18 @@ export interface InternalXLink {
 
 // noinspection JSUnusedGlobalSymbols
 export class VertexTemplateService {
-  static _inject = [SvgHelper, Actions, VertexTemplateFactory];
+  static _inject = [SvgHelper, ActionRegistry, VertexTemplateFactory];
 
-  constructor(private svgHelper: SvgHelper, private actions: Actions, private templateFactory: VertexTemplateFactory) {
+  constructor(private svgHelper: SvgHelper, private actions: ActionRegistry, private templateFactory: VertexTemplateFactory) {
   }
 
   public createTemplate(markup: string, viewController: any): VertexTemplate {
     /* dom is mutated - do not inline anything here ! */
-    let dom         = this.svgHelper.parseSvgMarkup(markup);
-    let definitions = this._extractDefinitions(dom);
-    let actions     = this._createTemplateActions(dom);
-    let rc          = dom.querySelector("[px-node]");
-    return this.templateFactory.createInstance(<Element> rc.cloneNode(true), viewController, actions, definitions);
+    let dom           = this.svgHelper.parseSvgMarkup(markup);
+    let definitions   = this._extractDefinitions(dom);
+    let actions       = this._createTemplateActions(dom);
+    let domEntryPoint = dom.querySelector("[px-node]");
+    return this.templateFactory.createInstance(<Element> domEntryPoint.cloneNode(true), viewController, actions, definitions);
   }
 
   private _createTemplateActions(root: Element): VertexActions {
@@ -40,23 +40,21 @@ export class VertexTemplateService {
 
     while (el = walker.nextNode() as Element) {
       const attrs = this._getActionAttributes(el.attributes);
-      if (attrs && attrs.length) {
-        let actions = this.createActions(attrs);
-        el.setAttributeNS(null, "px", <any>elementActions.length);
-        elementActions.push(actions);
-        for (let attr of attrs) {
-          el.attributes.removeNamedItem(attr.name);
-        }
+
+      if (!attrs)
+        continue;
+
+      let actions = attrs.map((attr) => {
+        return this.actions.get(attr.actionName).compile(attr.attributeName, attr.value);
+      });
+      el.setAttributeNS(null, "px", <any>elementActions.length);
+      elementActions.push((actions.length === 1) ? actions[0] : new BindActionMulti(actions));
+
+      for (let attr of attrs) {
+        el.attributes.removeNamedItem(attr.name);
       }
     }
     return new VertexActions(elementActions);
-  }
-
-  private createActions(attrs: Array<InternalAttr>): ElementInstruction {
-    let actions = attrs.map((attr) => {
-      return this.actions.get(attr.actionName).compile(attr.attributeName, attr.value);
-    });
-    return (actions.length === 1) ? actions[0] : new BindActionMulti(actions);
   }
 
   private _getActionAttributes(attributes: NamedNodeMap): InternalAttr[] {

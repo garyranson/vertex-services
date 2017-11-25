@@ -7,6 +7,7 @@ export interface ElementInstruction {
   execute(element: Element, scope: any): void;
 }
 
-export abstract class ActionCompiler {
-  abstract compile(attributeName: string, expr: string): ElementInstruction;
+export interface ActionCompiler {
+  compile(attributeName: string, expr: string): ElementInstruction;
+  getActionName(): string;
 }

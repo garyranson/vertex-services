@@ -1,17 +1,16 @@
 import {ActionFactory, ElementInstruction} from "./definitions";
 import {Instruction} from "expression-compiler";
 
-
 const _svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
 export class TransformActionFactory implements ActionFactory {
-  create(instr: Instruction[]): ElementInstruction {
-    return new TransformAction(instr);
+  create(instructions: Instruction[]): ElementInstruction {
+    return new TransformAction(instructions);
   }
 }
 
 class TransformAction implements ElementInstruction {
-  constructor(private instr: Instruction[]) {
+  constructor(private instructions: Instruction[]) {
   }
 
   execute(element: Element, scope: any): void {
@@ -19,10 +18,9 @@ class TransformAction implements ElementInstruction {
     scope.translate = translate;
     let transformList = element["transform"].baseVal as SVGTransformList;
     transformList.clear();
-    for (let f of this.instr) {
+    for (let f of this.instructions) {
       transformList.appendItem(f.eval(scope));
     }
-    console.log("here");
   }
 }
 

@@ -1,4 +1,4 @@
-import { ElementInstruction } from "./definitions";
+import { ElementInstruction } from "./action-compilers";
 export declare class VertexActions {
     private actions;
     constructor(actions: ElementInstruction[]);
