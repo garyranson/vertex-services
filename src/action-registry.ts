@@ -11,6 +11,7 @@ export class ActionRegistry {
 
   register(compiler: ActionCompiler): void {
     this.registry.set(compiler.getActionName(), compiler);
+    console.log('ete');
   }
 
   get(actionName: string): ActionCompiler {
